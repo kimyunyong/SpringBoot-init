@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kyy.blog.test.MyBatisConnectionMapper">
+  <insert id="insertEdu" parameterType="EduVo">
+    INSERT INTO EDU (
+    	NAME, 
+    	NUMLIMIT, 
+    	CONTENTS, 
+    	PRICE, 
+    	STARTDATE,
+    	ENDDATE,
+    	REGDATE
+    )
+    VALUES(
+    	#{name},
+    	#{numLimit},
+    	#{contents},
+    	#{price},
+    	#{startDate},
+    	STR_TO_DATE(#{endDate},'%Y%m%d%H'),
+    	NOW()
+    )
+    
+    <selectKey keyProperty="eduNo" resultType="String" order="AFTER">
+    	SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  
+  <select id="getEdu"  parameterType="EduVo" resultType="EduVo">
+	  	SELECT 
+				  		EDUNO, 
+				  		NAME, 
+				  		NUMLIMIT, 
+				  		CONTENTS, 
+				  		PRICE, 
+				  		STARTDATE, 
+				  		DATE_FORMAT(ENDDATE, '%Y%m%d%H') AS ENDDATE, 
+				  		DATE_FORMAT(REGDATE, '%Y년%m월%d일 %H') AS REGDATE
+	  	FROM		EDU 
+	  	WHERE		1=1
+	  	AND			EDUNO = #{eduNo}
+  </select>
+</mapper>

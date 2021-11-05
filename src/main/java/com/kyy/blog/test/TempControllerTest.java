@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class BlogControllerTest {
-	@GetMapping("/test/hello")
-	public String hello() {
-		return "<h1>hello</h1>";
+@Controller
+public class TempControllerTest {
+	@GetMapping("/temp/home")
+	public String tempHome() {
+		System.out.println("tempHome");
+		return "/home.html";
 	}
 }
